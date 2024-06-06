@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaClock } from "react-icons/fa";
+import { FaClock, FaHome } from "react-icons/fa";
 
 const Footer = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -51,6 +51,17 @@ const Footer = () => {
         {weather.weatherDescription} , {Math.floor(weather.temp - 273.15)}&deg;
         <img src={weather.iconUrl} alt="Weather Icon" />
       </p>
+      <button
+        className="p-2 rounded-full bg-secondary text-primary text-xl right-4 -translate-y-8 md:-translate-y-10 absolute shadow-lg"
+        onClick={() => {
+          const homeRef = document.getElementById("home");
+          homeRef.scrollIntoView({
+            behavior: "smooth",
+          });
+        }}
+      >
+        <FaHome />
+      </button>
     </footer>
   );
 };
