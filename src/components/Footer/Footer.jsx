@@ -44,7 +44,7 @@ const Footer = () => {
         <FaClock />
         {currentTime}
       </p>
-      <p className="dark:text-red-400">
+      <p className="text-red-400">
         &copy; {new Date().getFullYear()} GoFood. All Rights Reserved.
       </p>
       <p className="flex items-center">
