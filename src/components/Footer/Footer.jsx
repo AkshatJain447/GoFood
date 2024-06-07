@@ -44,9 +44,7 @@ const Footer = () => {
         <FaClock />
         {currentTime}
       </p>
-      <p className="text-red-400">
-        &copy; {new Date().getFullYear()} GoFood. All Rights Reserved.
-      </p>
+      <p>&copy; {new Date().getFullYear()} GoFood. All Rights Reserved.</p>
       <p className="flex items-center">
         {weather.weatherDescription} , {Math.floor(weather.temp - 273.15)}&deg;
         <img src={weather.iconUrl} alt="Weather Icon" />
