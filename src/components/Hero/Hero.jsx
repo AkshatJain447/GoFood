@@ -4,14 +4,54 @@ import leaf from "../../assets/Leaf.png";
 import kiwi from "../../assets/kiwi.jpg";
 import { FaArrowRight, FaPlus } from "react-icons/fa6";
 import "./Hero.css";
+import { useParallax } from "react-scroll-parallax";
+import { useEffect, useState } from "react";
+
+const CountUpAnimation = ({ initialValue, targetValue, text }) => {
+  const [count, setCount] = useState(initialValue);
+  const duration = 1500;
+
+  useEffect(() => {
+    let startValue = initialValue;
+    const interval = Math.floor(duration / (targetValue - initialValue));
+
+    const counter = setInterval(() => {
+      startValue += 1;
+      setCount(startValue);
+      if (startValue >= targetValue) {
+        clearInterval(counter);
+      }
+    }, interval);
+
+    return () => {
+      clearInterval(counter);
+    };
+  }, [targetValue, initialValue]);
+
+  return (
+    <p>
+      <span className="lg:text-2xl flex gap-1 items-center">
+        {count}k <FaPlus className=" font-light lg:text-xl" />
+      </span>
+      {text}
+    </p>
+  );
+};
 
 const Hero = () => {
+  const heroRef = useParallax({ speed: -8 });
+  const leafRef1 = useParallax({ rotate: [180, 0] });
+  const leafRef2 = useParallax({ rotate: [95, 360] });
+
   return (
     <div>
       <div className="bg-secondary absolute h-[90vh] md:h-[65vh] lg:h-[90vh] w-full md:w-[65%] top-0 left-0 -z-10"></div>
       <div className="md:bg-primary absolute h-[90vh] md:h-[65vh] lg:h-[90vh] w-full md:w-[45%] top-0 right-0 -z-10"></div>
       <Navbar />
-      <div className="flex flex-col md:flex-row justify-evenly items-center mx-2 md:mx-4 lg:mx-10 mt-16">
+      <div
+        ref={heroRef.ref}
+        className=" flex flex-col md:flex-row justify-evenly items-center mx-2 md:mx-4 lg:mx-10 mt-16"
+      >
         <div className="md:w-[35vw]">
           <h3 className="font-sans font-semibold md:text-lg lg:text-xl">
             Discount up to 20%
@@ -33,18 +73,12 @@ const Hero = () => {
             <button className="flex justify-center items-center gap-2 bg-primary p-2 px-4 lg:p-3 lg:px-6 text-white rounded-full">
               SHOP NOW <FaArrowRight />
             </button>
-            <p>
-              <span className="lg:text-2xl flex gap-1 items-center">
-                35k <FaPlus className=" font-light lg:text-xl" />
-              </span>
-              Users
-            </p>
-            <p>
-              <span className="lg:text-2xl flex gap-1 items-center">
-                18k <FaPlus className=" font-light lg:text-xl" />
-              </span>
-              Products
-            </p>
+            <CountUpAnimation initialValue={0} targetValue={35} text="Users" />
+            <CountUpAnimation
+              initialValue={0}
+              targetValue={18}
+              text="Products"
+            />
           </div>
         </div>
         <div className="flex items-end mt-6 md:mt-auto md:-mr-20">
@@ -54,14 +88,16 @@ const Hero = () => {
             className=" h-[300px] lg:h-[450px]"
           />
           <img
+            ref={leafRef1.ref}
             src={leaf}
             alt="leaf"
-            className="h-0 lg:h-[100px] relative -left-16 rotate-[135deg]"
+            className="h-0 lg:h-[100px] relative -left-16 "
           />
           <img
+            ref={leafRef2.ref}
             src={leaf}
             alt="leaf"
-            className="h-0 lg:h-[100px] relative top-2 -left-[150px] rotate-[175deg]"
+            className="h-0 lg:h-[100px] relative top-2 -left-[150px]"
           />
         </div>
       </div>

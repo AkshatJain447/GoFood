@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa6";
 
 const list = [
@@ -11,8 +12,22 @@ const list = [
 ];
 
 const Card = ({ foodItem }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  const cardVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: { scale: 1, opacity: 1, transition: { duration: 0.4 } },
+  };
+
   return (
-    <div className="flex items-center w-[95%] md:w-[45%]">
+    <motion.div
+      className="flex items-center w-[95%] md:w-[45%]"
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={cardVariants}
+    >
       <img
         src={foodItem.strMealThumb}
         alt="thumbnail"
@@ -29,7 +44,7 @@ const Card = ({ foodItem }) => {
           </button>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

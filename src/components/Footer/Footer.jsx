@@ -39,7 +39,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="flex flex-col md:flex-row p-3 justify-between items-center bg-secondary text-primary dark:bg-gray-800 dark:text-gray-300 text-center">
+    <footer className="flex flex-col md:flex-row p-3 justify-between items-center bg-secondary text-primary text-center">
       <p className="flex gap-2 items-center text-lg w-36">
         <FaClock />
         {currentTime}
